@@ -1,0 +1,47 @@
+{
+  "name": "wraith9000.io",
+  "private": true,
+  "types": "./types.d.ts",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prepare-deploy": "next build && next export"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^5.18.0",
+    "@types/react-dom": "^18.3.7",
+    "next": "^14.2.30",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-ga": "^3.3.1",
+    "react-lottie-player": "^1.5.6",
+    "sass": "^1.89.2"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^15.3.5",
+    "@types/node": "^24.0.13",
+    "@types/react": "^18.3.23",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.8.3"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "last 5 Chrome versions",
+    "Firefox >= 60",
+    "Edge >= 15",
+    "Safari >= 10"
+  ]
+}
