@@ -1,0 +1,19 @@
+{
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "always"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "always"
+    }
+  },
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "Iotabot",
+    "Metaverse",
+    "Roadmap",
+    "walletconnect"
+  ]
+}

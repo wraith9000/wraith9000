@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"sections\\\\home\\\\Hero.tsx -> ../../public/assets/lottie.json":{"id":7850,"files":["static/chunks/850.990ae80898c9004c.js"]},"sections\\\\home\\\\Hero.tsx -> react-lottie-player":{"id":9185,"files":["static/chunks/ea88be26.fb9c7078dd437d09.js","static/chunks/185.dc3a1a2b8e8308fd.js"]}}';
