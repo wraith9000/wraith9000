@@ -16,6 +16,11 @@ const getBaseUrl = () => {
     return publicBaseUrl
   }
   
+  // Fallback for production deployment
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://wraith9000-rndp.vercel.app'
+  }
+  
   return 'http://localhost:3000'
 }
 

@@ -8,6 +8,8 @@ module.exports = {
     // Use default Next.js image optimization
     domains: [],
   },
+  // Ensure proper handling of trailing slashes
+  trailingSlash: false,
   async headers() {
     return [
       {
