@@ -4,8 +4,8 @@ module.exports = {
     RPC_URL_WRAITH9000_EVM: 'https://json-rpc.evm.testnet.shimmer.network',
   },
   images: {
-    loader: 'imgix',
-    path: '',
+    // Remove imgix loader configuration since it's not properly set up
+    // Use default Next.js image optimization
     domains: [],
   },
   async headers() {

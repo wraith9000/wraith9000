@@ -26,7 +26,8 @@ const SEOHead: React.FC<SEOHeadProps> = ({
     structuredData,
 }) => {
     const fullUrl = url.startsWith('http') ? url : `https://${url}`
-    const fullImage = image.startsWith('http') ? image : `https://www.wraith9000.io${image}`
+    // Use the image URL as provided by the config (which now uses dynamic base URL)
+    const fullImage = image.startsWith('http') ? image : `${typeof window !== 'undefined' ? window.location.origin : ''}${image}`
 
     return (
         <Head>

@@ -1,14 +1,15 @@
 {
   "sections\\home\\Hero.tsx -> ../../public/assets/lottie.json": {
-    "id": "sections\\home\\Hero.tsx -> ../../public/assets/lottie.json",
+    "id": 7850,
     "files": [
-      "static/chunks/public_assets_lottie_json.js"
+      "static/chunks/850.990ae80898c9004c.js"
     ]
   },
   "sections\\home\\Hero.tsx -> react-lottie-player": {
-    "id": "sections\\home\\Hero.tsx -> react-lottie-player",
+    "id": 9185,
     "files": [
-      "static/chunks/node_modules_react-lottie-player_dist_LottiePlayer_modern_js.js"
+      "static/chunks/ea88be26.8c49d3cada68176d.js",
+      "static/chunks/185.36949e7a49bbc12a.js"
     ]
   }
 }

@@ -1,3 +1,26 @@
+// Get the base URL from environment or default to localhost for development
+const getBaseUrl = () => {
+  if (typeof window !== 'undefined') {
+    // Client-side: use current origin
+    return window.location.origin
+  }
+  // Server-side: use environment variable or default
+  const vercelUrl = process.env.VERCEL_URL
+  const publicBaseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  
+  if (vercelUrl) {
+    return `https://${vercelUrl}`
+  }
+  
+  if (publicBaseUrl) {
+    return publicBaseUrl
+  }
+  
+  return 'http://localhost:3000'
+}
+
+const baseUrl = getBaseUrl()
+
 export const SEO = {
   title: 'Wraith9000 - Next-Gen Web3 Play-to-Earn Game on Arena.Social',
   description:
@@ -6,11 +29,11 @@ export const SEO = {
   author: 'Wraith9000 Team',
   openGraph: {
     type: 'website',
-    url: 'https://www.wraith9000.io',
+    url: `${baseUrl}`,
     title: 'Wraith9000 - Next-Gen Web3 Play-to-Earn Game',
     description:
       'Enter the multiverse with Wraith9000 - the next-generation Web3 play-to-earn game featuring dual-token system, NFT skins, and true player ownership on Arena.Social platform.',
-    image: 'https://www.wraith9000.io/assets/wraith9000.png',
+    image: `${baseUrl}/assets/wraith9000.png`,
     imageWidth: 1200,
     imageHeight: 630,
     siteName: 'Wraith9000',
@@ -22,25 +45,25 @@ export const SEO = {
     creator: '@wraith9000',
     title: 'Wraith9000 - Next-Gen Web3 Play-to-Earn Game',
     description: 'Enter the multiverse with Wraith9000 - the next-generation Web3 play-to-earn game featuring dual-token system, NFT skins, and true player ownership.',
-    image: 'https://www.wraith9000.io/assets/wraith9000.png',
+    image: `${baseUrl}/assets/wraith9000.png`,
   },
   structuredData: {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Wraith9000',
-    url: 'https://www.wraith9000.io',
+    url: `${baseUrl}`,
     description: 'Next-Gen Web3 Play-to-Earn Game on Arena.Social',
     publisher: {
       '@type': 'Organization',
       name: 'Wraith9000',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.wraith9000.io/assets/wraith9000.png'
+        url: `${baseUrl}/assets/wraith9000.png`
       }
     },
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://www.wraith9000.io/search?q={search_term_string}',
+      target: `${baseUrl}/search?q={search_term_string}`,
       'query-input': 'required name=search_term_string'
     }
   },
