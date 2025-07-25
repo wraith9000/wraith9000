@@ -10,11 +10,15 @@ import '@rainbow-me/rainbowkit/styles.css'
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            retry: (failureCount, error: any) => {
+            retry: (failureCount, error: unknown) => {
                 // Don't retry on CORS errors or network failures
-                if (error?.message?.includes('CORS') ||
-                    error?.message?.includes('Failed to fetch') ||
-                    error?.message?.includes('NetworkError')) {
+                const errorMessage = error && typeof error === 'object' && 'message' in error
+                    ? String(error.message)
+                    : '';
+
+                if (errorMessage.includes('CORS') ||
+                    errorMessage.includes('Failed to fetch') ||
+                    errorMessage.includes('NetworkError')) {
                     return false
                 }
                 // Retry up to 3 times for other errors
