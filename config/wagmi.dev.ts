@@ -2,7 +2,7 @@ import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { mainnet, polygon, optimism, arbitrum, base, zora, avalanche } from 'wagmi/chains'
 import { http } from 'wagmi'
 
-// Development-specific RPC endpoints that are CORS-friendly
+// CORS-friendly RPC endpoints for development
 const devRpcEndpoints = {
     mainnet: 'https://eth.llamarpc.com',
     polygon: 'https://polygon.llamarpc.com',

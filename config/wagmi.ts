@@ -6,21 +6,33 @@ import type { Chain } from 'viem'
 // Check if we're in development mode
 const isDevelopment = process.env.NODE_ENV === 'development'
 
-// Custom RPC endpoints that work better with localhost - using more reliable providers
-const customRpcEndpoints = {
-    mainnet: isDevelopment ? 'https://rpc.ankr.com/eth' : undefined,
-    polygon: isDevelopment ? 'https://rpc.ankr.com/polygon' : undefined,
-    optimism: isDevelopment ? 'https://rpc.ankr.com/optimism' : undefined,
-    arbitrum: isDevelopment ? 'https://rpc.ankr.com/arbitrum' : undefined,
-    base: isDevelopment ? 'https://mainnet.base.org' : undefined,
-    zora: isDevelopment ? 'https://rpc.zora.energy' : undefined,
-    avalanche: isDevelopment ? 'https://api.avax.network/ext/bc/C/rpc' : undefined
+// CORS-friendly RPC endpoints that work reliably in production
+const productionRpcEndpoints = {
+    mainnet: 'https://eth.llamarpc.com',
+    polygon: 'https://polygon.llamarpc.com',
+    optimism: 'https://optimism.llamarpc.com',
+    arbitrum: 'https://arbitrum.llamarpc.com',
+    base: 'https://base.llamarpc.com',
+    zora: 'https://rpc.zora.energy',
+    avalanche: 'https://api.avax.network/ext/bc/C/rpc'
 }
 
-// Helper function to create chain configuration
-const createChainConfig = (chain: Chain, rpcUrl?: string): Chain => {
-    if (!rpcUrl) return chain
+// Development-specific endpoints (same as production for now)
+const developmentRpcEndpoints = {
+    mainnet: 'https://eth.llamarpc.com',
+    polygon: 'https://polygon.llamarpc.com',
+    optimism: 'https://optimism.llamarpc.com',
+    arbitrum: 'https://arbitrum.llamarpc.com',
+    base: 'https://base.llamarpc.com',
+    zora: 'https://rpc.zora.energy',
+    avalanche: 'https://api.avax.network/ext/bc/C/rpc'
+}
 
+// Use appropriate endpoints based on environment
+const rpcEndpoints = isDevelopment ? developmentRpcEndpoints : productionRpcEndpoints
+
+// Helper function to create chain configuration
+const createChainConfig = (chain: Chain, rpcUrl: string): Chain => {
     return {
         ...chain,
         rpcUrls: {
@@ -35,18 +47,18 @@ const createChainConfig = (chain: Chain, rpcUrl?: string): Chain => {
     }
 }
 
-// Use development config if in development mode
+// Base configuration with improved settings
 const baseConfig = {
     appName: 'Wraith9000',
     projectId: '0456b2785d82f349a226550c56afbad0',
     chains: [
-        createChainConfig(avalanche, customRpcEndpoints.avalanche),
-        createChainConfig(mainnet, customRpcEndpoints.mainnet),
-        createChainConfig(polygon, customRpcEndpoints.polygon),
-        createChainConfig(optimism, customRpcEndpoints.optimism),
-        createChainConfig(arbitrum, customRpcEndpoints.arbitrum),
-        createChainConfig(base, customRpcEndpoints.base),
-        createChainConfig(zora, customRpcEndpoints.zora),
+        createChainConfig(avalanche, rpcEndpoints.avalanche),
+        createChainConfig(mainnet, rpcEndpoints.mainnet),
+        createChainConfig(polygon, rpcEndpoints.polygon),
+        createChainConfig(optimism, rpcEndpoints.optimism),
+        createChainConfig(arbitrum, rpcEndpoints.arbitrum),
+        createChainConfig(base, rpcEndpoints.base),
+        createChainConfig(zora, rpcEndpoints.zora),
     ] as const,
     ssr: true,
     transports: {

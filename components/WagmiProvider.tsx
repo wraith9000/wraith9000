@@ -18,15 +18,22 @@ const queryClient = new QueryClient({
 
                 if (errorMessage.includes('CORS') ||
                     errorMessage.includes('Failed to fetch') ||
-                    errorMessage.includes('NetworkError')) {
+                    errorMessage.includes('NetworkError') ||
+                    errorMessage.includes('ERR_FAILED') ||
+                    errorMessage.includes('ERR_ABORTED')) {
                     return false
                 }
-                // Retry up to 3 times for other errors
-                return failureCount < 3
+                // Retry up to 2 times for other errors (reduced from 3)
+                return failureCount < 2
             },
-            retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+            retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000), // Reduced max delay
             staleTime: 1000 * 60 * 5, // 5 minutes
             gcTime: 1000 * 60 * 10, // 10 minutes
+            // Add network mode to prevent unnecessary requests
+            networkMode: 'online',
+        },
+        mutations: {
+            retry: false, // Don't retry mutations
         },
     },
 })
@@ -34,7 +41,12 @@ const queryClient = new QueryClient({
 const WagmiProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider>
+            <RainbowKitProvider
+                // Disable analytics to prevent Coinbase tracking errors
+                showRecentTransactions={false}
+                // Disable automatic wallet connection
+                autoConnect={false}
+            >
                 {children}
             </RainbowKitProvider>
         </QueryClientProvider>

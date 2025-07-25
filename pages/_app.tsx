@@ -13,6 +13,7 @@ import Frame from '../components/Frame'
 import ThemeProvider from '../components/wraith9000/ThemeProvider'
 import MobileOptimizer from '../components/MobileOptimizer'
 import { WagmiProviderWrapper } from '../components/WagmiProvider'
+import ErrorBoundary from '../components/ErrorBoundary'
 
 const YOUR_TRACKING_ID = 'G-YTZ512CCQL'
 
@@ -125,15 +126,17 @@ const App: React.FC<AppProps> = (props) => {
         }}
       />
 
-      <WagmiProviderWrapper>
-        <ThemeProvider>
-          <MobileOptimizer>
-            <Frame />
-            <CustomNavigation />
-            <Component {...pageProps} />
-          </MobileOptimizer>
-        </ThemeProvider>
-      </WagmiProviderWrapper>
+      <ErrorBoundary>
+        <WagmiProviderWrapper>
+          <ThemeProvider>
+            <MobileOptimizer>
+              <Frame />
+              <CustomNavigation />
+              <Component {...pageProps} />
+            </MobileOptimizer>
+          </ThemeProvider>
+        </WagmiProviderWrapper>
+      </ErrorBoundary>
     </>
   )
 }
