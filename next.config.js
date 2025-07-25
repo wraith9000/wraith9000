@@ -21,7 +21,7 @@ module.exports = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
-              "connect-src 'self' https://json-rpc.evm.testnet.shimmer.network https://*.google-analytics.com https://www.google-analytics.com https://discord.com https://chillzone.fr https://pulse.walletconnect.org https://api.web3modal.org https://api.avax.network https://eth.merkle.io https://*.walletconnect.com https://*.walletconnect.org https://*.rainbow.me https://*.rainbowkit.com https://*.viem.sh https://*.wagmi.sh https://*.ethers.io https://*.alchemyapi.io https://*.infura.io https://*.quicknode.com https://*.moralis.io https://*.web3api.io https://*.web3api.com https://*.web3api.org https://*.web3api.net https://*.web3api.dev https://*.web3api.pro https://*.web3api.tech https://*.web3api.cloud https://*.web3api.studio https://*.web3api.art https://*.web3api.game https://*.web3api.app https://*.web3api.site https://*.web3api.xyz https://*.ankr.com https://mainnet.base.org https://rpc.zora.energy https://*.coinbase.com https://cca-lite.coinbase.com https://*.llamarpc.com https://eth.llamarpc.com https://polygon.llamarpc.com https://optimism.llamarpc.com https://arbitrum.llamarpc.com https://base.llamarpc.com",
+              "connect-src 'self' https://json-rpc.evm.testnet.shimmer.network https://*.google-analytics.com https://www.google-analytics.com https://discord.com https://chillzone.fr",
               "frame-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",

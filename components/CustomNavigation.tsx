@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
 import Logo from './Logo';
-
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,7 +11,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 interface MenuItem {
   label: string;
@@ -124,27 +122,7 @@ const CustomNavigation: React.FC = () => {
         </Box>
       )}
 
-      {/* Connect Button - floating top right, better mobile positioning */}
-      {!isMobile && (
-        <Box
-          sx={{
-            position: 'fixed',
-            top: { md: 100, lg: 120 }, // Moved lower and more inside
-            right: { md: 140, lg: 160 }, // Moved more inside
-            zIndex: 1300,
-          }}
-          className="rainbow-kit-connect"
-        >
-          <ConnectButton
-            showBalance
-            chainStatus="icon"
-            accountStatus={{
-              smallScreen: 'avatar',
-              largeScreen: 'full',
-            }}
-          />
-        </Box>
-      )}
+
 
       {/* Hamburger menu for mobile with improved touch target */}
       {isMobile && (
@@ -320,17 +298,7 @@ const CustomNavigation: React.FC = () => {
             })}
           </Box>
 
-          {/* Mobile Connect Button */}
-          <Box sx={{ width: '100%', mt: 2, px: { xs: 3, sm: 4 } }} className="rainbow-kit-connect">
-            <ConnectButton
-              showBalance
-              chainStatus="icon"
-              accountStatus={{
-                smallScreen: 'avatar',
-                largeScreen: 'full',
-              }}
-            />
-          </Box>
+
         </Box>
       </Drawer>
 
