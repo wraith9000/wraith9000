@@ -21,13 +21,17 @@ class ErrorBoundary extends Component<Props, State> {
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+        // eslint-disable-next-line no-console
         console.error('ErrorBoundary caught an error:', error, errorInfo)
     }
 
     render() {
-        if (this.state.hasError) {
-            if (this.props.fallback) {
-                return this.props.fallback
+        const { hasError } = this.state
+        const { children, fallback } = this.props
+
+        if (hasError) {
+            if (fallback) {
+                return fallback
             }
 
             return (
@@ -43,6 +47,7 @@ class ErrorBoundary extends Component<Props, State> {
                     <h3>Something went wrong</h3>
                     <p>Please try refreshing the page or connecting your wallet again.</p>
                     <button
+                        type="button"
                         onClick={() => this.setState({ hasError: false })}
                         style={{
                             padding: '8px 16px',
@@ -59,7 +64,7 @@ class ErrorBoundary extends Component<Props, State> {
             )
         }
 
-        return this.props.children
+        return children
     }
 }
 

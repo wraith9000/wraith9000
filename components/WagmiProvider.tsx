@@ -44,8 +44,6 @@ const WagmiProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
             <RainbowKitProvider
                 // Disable analytics to prevent Coinbase tracking errors
                 showRecentTransactions={false}
-                // Disable automatic wallet connection
-                autoConnect={false}
             >
                 {children}
             </RainbowKitProvider>

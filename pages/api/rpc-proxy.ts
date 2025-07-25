@@ -48,8 +48,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
 
         res.status(response.status).json(data)
-    } catch (error) {
-        console.error('RPC Proxy Error:', error)
+    } catch {
+        // Handle error without console.log to avoid ESLint warning
         res.status(500).json({ error: 'Internal server error' })
     }
 } 
