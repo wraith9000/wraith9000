@@ -4,6 +4,7 @@ import * as React from 'react'
 import Head from 'next/head'
 import Script from 'next/script'
 import '../styles/globals.scss'
+import '../styles/rainbowkit-custom.css'
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import ReactGA from 'react-ga'
 import CustomNavigation from '../components/CustomNavigation'
@@ -11,6 +12,7 @@ import { SEO } from '../config'
 import Frame from '../components/Frame'
 import ThemeProvider from '../components/wraith9000/ThemeProvider'
 import MobileOptimizer from '../components/MobileOptimizer'
+import { WagmiProviderWrapper } from '../components/WagmiProvider'
 
 const YOUR_TRACKING_ID = 'G-YTZ512CCQL'
 
@@ -123,13 +125,15 @@ const App: React.FC<AppProps> = (props) => {
         }}
       />
 
-      <ThemeProvider>
-        <MobileOptimizer>
-          <Frame />
-          <CustomNavigation />
-          <Component {...pageProps} />
-        </MobileOptimizer>
-      </ThemeProvider>
+      <WagmiProviderWrapper>
+        <ThemeProvider>
+          <MobileOptimizer>
+            <Frame />
+            <CustomNavigation />
+            <Component {...pageProps} />
+          </MobileOptimizer>
+        </ThemeProvider>
+      </WagmiProviderWrapper>
     </>
   )
 }
