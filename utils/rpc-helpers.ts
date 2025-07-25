@@ -1,93 +1,121 @@
-// RPC endpoint fallbacks
-export const RPC_FALLBACKS = {
-    mainnet: [
+// RPC helper utilities for fallback and testing
+
+// RPC endpoints for each chain
+export const rpcEndpoints = {
+    1: 'https://eth.llamarpc.com', // mainnet
+    137: 'https://polygon.llamarpc.com', // polygon
+    10: 'https://optimism.llamarpc.com', // optimism
+    42161: 'https://arbitrum.llamarpc.com', // arbitrum
+    8453: 'https://base.llamarpc.com', // base
+    7777777: 'https://rpc.zora.energy', // zora
+    43114: 'https://api.avax.network/ext/bc/C/rpc', // avalanche
+}
+
+// Fallback endpoints for redundancy
+export const fallbackEndpoints = {
+    1: [
         'https://eth.llamarpc.com',
         'https://rpc.ankr.com/eth',
-        'https://ethereum.publicnode.com'
+        'https://cloudflare-eth.com',
     ],
-    polygon: [
+    137: [
         'https://polygon.llamarpc.com',
-        'https://rpc.ankr.com/polygon',
-        'https://polygon-rpc.com'
+        'https://polygon-rpc.com',
+        'https://rpc-mainnet.matic.network',
     ],
-    optimism: [
+    10: [
         'https://optimism.llamarpc.com',
+        'https://mainnet.optimism.io',
         'https://rpc.ankr.com/optimism',
-        'https://mainnet.optimism.io'
     ],
-    arbitrum: [
+    42161: [
         'https://arbitrum.llamarpc.com',
+        'https://arb1.arbitrum.io/rpc',
         'https://rpc.ankr.com/arbitrum',
-        'https://arb1.arbitrum.io/rpc'
     ],
-    base: [
+    8453: [
         'https://base.llamarpc.com',
         'https://mainnet.base.org',
-        'https://base.blockpi.network/v1/rpc/public'
+        'https://base.blockpi.network/v1/rpc/public',
     ],
-    zora: [
+    7777777: [
         'https://rpc.zora.energy',
-        'https://rpc.zora.co'
+        'https://rpc.zora.co',
     ],
-    avalanche: [
+    43114: [
         'https://api.avax.network/ext/bc/C/rpc',
         'https://rpc.ankr.com/avalanche',
-        'https://avalanche.public-rpc.com'
-    ]
+        'https://api.avax.network/ext/bc/C/rpc',
+    ],
 }
 
-// Error types that should trigger fallback
-export const FALLBACK_ERRORS = [
-    'CORS',
-    'Failed to fetch',
-    'NetworkError',
-    'ERR_FAILED',
-    'ERR_ABORTED',
-    'timeout',
-    'ECONNREFUSED',
-    'ENOTFOUND'
-]
+// Test RPC connection
+export async function testRpcConnection(endpoint: string): Promise<boolean> {
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                jsonrpc: '2.0',
+                id: 1,
+                method: 'eth_blockNumber',
+                params: [],
+            }),
+        })
 
-// Check if an error should trigger fallback
-export const shouldUseFallback = (error: unknown): boolean => {
-    const errorMessage = error && typeof error === 'object' && 'message' in error
-        ? String(error.message)
-        : String(error)
+        if (!response.ok) {
+            return false
+        }
 
-    return FALLBACK_ERRORS.some(fallbackError =>
-        errorMessage.toLowerCase().includes(fallbackError.toLowerCase())
-    )
+        const data = await response.json()
+        return !data.error && data.result
+    } catch {
+        return false
+    }
 }
 
-// Get next fallback endpoint
-export const getNextFallback = (chainName: keyof typeof RPC_FALLBACKS, currentIndex: number): string | null => {
-    const fallbacks = RPC_FALLBACKS[chainName]
-    return currentIndex < fallbacks.length - 1 ? fallbacks[currentIndex + 1] : null
-}
+// Get working RPC endpoint for a chain
+export async function getWorkingRpcEndpoint(chainId: number): Promise<string | null> {
+    const endpoints = fallbackEndpoints[chainId as keyof typeof fallbackEndpoints] || [rpcEndpoints[chainId as keyof typeof rpcEndpoints]]
 
-// Retry with exponential backoff
-export const retryWithBackoff = async <T>(
-    fn: () => Promise<T>,
-    maxRetries: number = 3,
-    baseDelay: number = 1000
-): Promise<T> => {
-    let lastError: unknown
-
-    for (let i = 0; i < maxRetries; i++) {
-        try {
-            return await fn()
-        } catch (error) {
-            lastError = error
-
-            if (i === maxRetries - 1) {
-                throw error
-            }
-
-            // Wait with exponential backoff
-            const delay = baseDelay * Math.pow(2, i)
-            await new Promise(resolve => setTimeout(resolve, delay))
+    for (const endpoint of endpoints) {
+        if (await testRpcConnection(endpoint)) {
+            return endpoint
         }
     }
 
-    throw lastError
+    return null
+}
+
+// Test proxy endpoint
+export async function testProxyEndpoint(chainId: number): Promise<boolean> {
+    const isDevelopment = process.env.NODE_ENV === 'development'
+    const baseUrl = isDevelopment ? 'http://localhost:3000' : 'https://wraith9000-rndp.vercel.app'
+    const proxyUrl = `${baseUrl}/api/rpc-proxy/${chainId}`
+
+    try {
+        const response = await fetch(proxyUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                jsonrpc: '2.0',
+                id: 1,
+                method: 'eth_blockNumber',
+                params: [],
+            }),
+        })
+
+        if (!response.ok) {
+            return false
+        }
+
+        const data = await response.json()
+        return !data.error && data.result
+    } catch {
+        return false
+    }
 } 

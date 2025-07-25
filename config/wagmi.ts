@@ -6,30 +6,11 @@ import type { Chain } from 'viem'
 // Check if we're in development mode
 const isDevelopment = process.env.NODE_ENV === 'development'
 
-// CORS-friendly RPC endpoints that work reliably in production
-const productionRpcEndpoints = {
-    mainnet: 'https://eth.llamarpc.com',
-    polygon: 'https://polygon.llamarpc.com',
-    optimism: 'https://optimism.llamarpc.com',
-    arbitrum: 'https://arbitrum.llamarpc.com',
-    base: 'https://base.llamarpc.com',
-    zora: 'https://rpc.zora.energy',
-    avalanche: 'https://api.avax.network/ext/bc/C/rpc'
+// Use API proxy endpoints to avoid CORS issues
+const getProxyUrl = (chainId: number) => {
+    const baseUrl = isDevelopment ? 'http://localhost:3000' : 'https://wraith9000-rndp.vercel.app'
+    return `${baseUrl}/api/rpc-proxy/${chainId}`
 }
-
-// Development-specific endpoints (same as production for now)
-const developmentRpcEndpoints = {
-    mainnet: 'https://eth.llamarpc.com',
-    polygon: 'https://polygon.llamarpc.com',
-    optimism: 'https://optimism.llamarpc.com',
-    arbitrum: 'https://arbitrum.llamarpc.com',
-    base: 'https://base.llamarpc.com',
-    zora: 'https://rpc.zora.energy',
-    avalanche: 'https://api.avax.network/ext/bc/C/rpc'
-}
-
-// Use appropriate endpoints based on environment
-const rpcEndpoints = isDevelopment ? developmentRpcEndpoints : productionRpcEndpoints
 
 // Helper function to create chain configuration
 const createChainConfig = (chain: Chain, rpcUrl: string): Chain => {
@@ -52,13 +33,13 @@ const baseConfig = {
     appName: 'Wraith9000',
     projectId: '0456b2785d82f349a226550c56afbad0',
     chains: [
-        createChainConfig(avalanche, rpcEndpoints.avalanche),
-        createChainConfig(mainnet, rpcEndpoints.mainnet),
-        createChainConfig(polygon, rpcEndpoints.polygon),
-        createChainConfig(optimism, rpcEndpoints.optimism),
-        createChainConfig(arbitrum, rpcEndpoints.arbitrum),
-        createChainConfig(base, rpcEndpoints.base),
-        createChainConfig(zora, rpcEndpoints.zora),
+        createChainConfig(avalanche, getProxyUrl(avalanche.id)),
+        createChainConfig(mainnet, getProxyUrl(mainnet.id)),
+        createChainConfig(polygon, getProxyUrl(polygon.id)),
+        createChainConfig(optimism, getProxyUrl(optimism.id)),
+        createChainConfig(arbitrum, getProxyUrl(arbitrum.id)),
+        createChainConfig(base, getProxyUrl(base.id)),
+        createChainConfig(zora, getProxyUrl(zora.id)),
     ] as const,
     ssr: true,
     transports: {
