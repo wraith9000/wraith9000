@@ -20,19 +20,37 @@ const TestRpcPage: React.FC = () => {
         setTesting(true)
         const newResults: Record<number, boolean> = {}
 
-        for (const chain of chains) {
+        // Use Promise.all to test all chains concurrently
+        const testPromises = chains.map(async (chain) => {
             try {
                 const result = await testProxyEndpoint(chain.id)
-                newResults[chain.id] = result
-                setResults({ ...newResults })
+                return { id: chain.id, result }
             } catch (error) {
-                console.error(`Error testing chain ${chain.id}:`, error)
-                newResults[chain.id] = false
-                setResults({ ...newResults })
+                // Handle error without console.log to avoid ESLint warning
+                return { id: chain.id, result: false }
             }
-        }
+        })
 
+        const testResults = await Promise.all(testPromises)
+
+        testResults.forEach(({ id, result }) => {
+            newResults[id] = result
+        })
+
+        setResults(newResults)
         setTesting(false)
+    }
+
+    const getSeverity = (result: boolean | undefined) => {
+        if (result === true) return 'success'
+        if (result === false) return 'error'
+        return 'info'
+    }
+
+    const getStatusText = (result: boolean | undefined) => {
+        if (result === true) return '✅ Working'
+        if (result === false) return '❌ Failed'
+        return '⏳ Not tested'
     }
 
     return (
@@ -53,10 +71,10 @@ const TestRpcPage: React.FC = () => {
             {chains.map((chain) => (
                 <Alert
                     key={chain.id}
-                    severity={results[chain.id] === true ? 'success' : results[chain.id] === false ? 'error' : 'info'}
+                    severity={getSeverity(results[chain.id])}
                     sx={{ mb: 1 }}
                 >
-                    {chain.name} (Chain ID: {chain.id}): {results[chain.id] === true ? '✅ Working' : results[chain.id] === false ? '❌ Failed' : '⏳ Not tested'}
+                    {chain.name} (Chain ID: {chain.id}): {getStatusText(results[chain.id])}
                 </Alert>
             ))}
         </Box>

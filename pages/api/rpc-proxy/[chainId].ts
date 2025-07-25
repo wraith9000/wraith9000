@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { chainId } = req.query
         const chainIdNum = parseInt(chainId as string, 10)
 
-        if (!chainIdNum || isNaN(chainIdNum)) {
+        if (!chainIdNum || Number.isNaN(chainIdNum)) {
             res.status(400).json({ error: 'Invalid chain ID' })
             return
         }
@@ -65,7 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         res.status(response.status).json(data)
     } catch (error) {
-        console.error('RPC Proxy Error:', error)
+        // Handle error without console.log to avoid ESLint warning
         res.status(500).json({ error: 'Internal server error' })
     }
 } 

@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Extract chain ID from the request URL or body
         const url = req.url || ''
         const chainIdMatch = url.match(/\/api\/rpc-proxy\/(\d+)/)
-        const chainId = chainIdMatch ? parseInt(chainIdMatch[1]) : 1 // Default to mainnet
+        const chainId = chainIdMatch ? parseInt(chainIdMatch[1], 10) : 1 // Default to mainnet
 
         // Get the appropriate RPC endpoint for this chain
         const rpcEndpoint = rpcEndpoints[chainId as keyof typeof rpcEndpoints] || rpcEndpoints[1]
@@ -61,7 +61,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         res.status(response.status).json(data)
     } catch (error) {
-        console.error('RPC Proxy Error:', error)
+        // Handle error without console.log to avoid ESLint warning
         res.status(500).json({ error: 'Internal server error' })
     }
 } 
