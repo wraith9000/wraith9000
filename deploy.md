@@ -33,7 +33,6 @@ This project is configured for deployment on Vercel. The following files have be
 The following environment variables should be set in your Vercel dashboard:
 
 - `NEXT_PUBLIC_BASE_URL`: `https://wraith9000-rndp.vercel.app`
-- `RPC_URL_WRAITH9000_EVM`: `https://json-rpc.evm.testnet.shimmer.network`
 
 ### Troubleshooting 404 Errors:
 

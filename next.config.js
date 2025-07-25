@@ -1,8 +1,5 @@
 module.exports = {
   reactStrictMode: true,
-  env: {
-    RPC_URL_WRAITH9000_EVM: 'https://json-rpc.evm.testnet.shimmer.network',
-  },
   images: {
     // Remove imgix loader configuration since it's not properly set up
     // Use default Next.js image optimization

@@ -7,20 +7,20 @@ const getBaseUrl = () => {
   // Server-side: use environment variable or default
   const vercelUrl = process.env.VERCEL_URL
   const publicBaseUrl = process.env.NEXT_PUBLIC_BASE_URL
-  
+
   if (vercelUrl) {
     return `https://${vercelUrl}`
   }
-  
+
   if (publicBaseUrl) {
     return publicBaseUrl
   }
-  
+
   // Fallback for production deployment
   if (process.env.NODE_ENV === 'production') {
     return 'https://wraith9000-rndp.vercel.app'
   }
-  
+
   return 'http://localhost:3000'
 }
 
@@ -89,7 +89,4 @@ export const SEO = {
   }
 }
 
-export const DISCORD_CONNECT =
-  'https://discord.com/api/oauth2/authorize?client_id=949687840504160267&redirect_uri=https%3A%2F%2Fwraith9000.io%2Fdiscord_connect&response_type=code&scope=identify'
 
-export const BACKEND_URL = 'https://chillzone.fr/connect-discord'
