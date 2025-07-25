@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
 import Logo from './Logo';
+import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -122,7 +123,45 @@ const CustomNavigation: React.FC = () => {
         </Box>
       )}
 
-
+      {/* Connect Button - floating top right, better mobile positioning */}
+      {!isMobile && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: { md: 100, lg: 120 }, // Moved lower and more inside
+            right: { md: 140, lg: 160 }, // Moved more inside
+            zIndex: 1300,
+          }}
+        >
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            startIcon={<AccountBalanceWalletRoundedIcon sx={{ fontSize: 20 }} />}
+            sx={{
+              bgcolor: '#ffe53b',
+              color: '#181f32',
+              fontFamily: 'Sarpanch, sans-serif',
+              fontWeight: 900,
+              borderRadius: '20px',
+              minWidth: 110,
+              height: 38,
+              px: 3,
+              fontSize: 16,
+              boxShadow: 2,
+              letterSpacing: 2,
+              textTransform: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1.5,
+              '&:hover': { bgcolor: '#ffe53b', opacity: 0.92 },
+            }}
+            disableElevation
+          >
+            Connect
+          </Button>
+        </Box>
+      )}
 
       {/* Hamburger menu for mobile with improved touch target */}
       {isMobile && (
@@ -298,7 +337,46 @@ const CustomNavigation: React.FC = () => {
             })}
           </Box>
 
-
+          {/* Mobile Connect Button */}
+          <Box sx={{ width: '100%', mt: 2, px: { xs: 3, sm: 4 } }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              fullWidth
+              startIcon={<AccountBalanceWalletRoundedIcon sx={{ fontSize: 20 }} />}
+              sx={{
+                bgcolor: '#ffe53b',
+                color: '#181f32',
+                fontFamily: 'Sarpanch, sans-serif',
+                fontWeight: 900,
+                borderRadius: '20px',
+                height: { xs: 52, sm: 56 }, // Better touch target
+                fontSize: { xs: 16, sm: 18 },
+                boxShadow: 2,
+                letterSpacing: 2,
+                textTransform: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                '&:hover': {
+                  bgcolor: '#ffe53b',
+                  opacity: 0.92,
+                  transform: 'translateY(-1px)',
+                },
+                '&:active': {
+                  transform: 'scale(0.98)',
+                },
+                '&:focus': {
+                  outline: '2px solid #2effbf',
+                  outlineOffset: '2px',
+                },
+                transition: 'all 0.2s ease',
+              }}
+              disableElevation
+            >
+              Connect Wallet
+            </Button>
+          </Box>
         </Box>
       </Drawer>
 
