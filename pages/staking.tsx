@@ -11,7 +11,6 @@ import {
     Alert,
     Snackbar,
     Chip,
-    LinearProgress,
 } from '@mui/material';
 import BaseLayout from '../components/wraith9000/BaseLayout';
 import Section from '../components/wraith9000/Section';
@@ -46,7 +45,7 @@ const StakingPage: React.FC = () => {
             setSnackbarMessage('Wallet connected successfully!');
             setSnackbarSeverity('success');
             setSnackbarOpen(true);
-        } catch (err) {
+        } catch (_err) {
             setSnackbarMessage(error || 'Failed to connect wallet');
             setSnackbarSeverity('error');
             setSnackbarOpen(true);
@@ -75,7 +74,7 @@ const StakingPage: React.FC = () => {
             setSnackbarSeverity('success');
             setSnackbarOpen(true);
             setStakeAmount('');
-        } catch (err) {
+        } catch (_err) {
             setSnackbarMessage('Failed to stake tokens');
             setSnackbarSeverity('error');
             setSnackbarOpen(true);
@@ -106,7 +105,7 @@ const StakingPage: React.FC = () => {
             setSnackbarSeverity('success');
             setSnackbarOpen(true);
             setUnstakeAmount('');
-        } catch (err) {
+        } catch (_err) {
             setSnackbarMessage('Failed to unstake tokens');
             setSnackbarSeverity('error');
             setSnackbarOpen(true);
@@ -129,7 +128,7 @@ const StakingPage: React.FC = () => {
             setSnackbarMessage('Rewards claimed successfully!');
             setSnackbarSeverity('success');
             setSnackbarOpen(true);
-        } catch (err) {
+        } catch (_err) {
             setSnackbarMessage('Failed to claim rewards');
             setSnackbarSeverity('error');
             setSnackbarOpen(true);

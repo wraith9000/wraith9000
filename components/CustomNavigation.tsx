@@ -54,7 +54,7 @@ const CustomNavigation: React.FC = () => {
       setSnackbarMessage('Wallet connected successfully!');
       setSnackbarSeverity('success');
       setSnackbarOpen(true);
-    } catch (err) {
+    } catch (_err) {
       setSnackbarMessage(error || 'Failed to connect wallet');
       setSnackbarSeverity('error');
       setSnackbarOpen(true);
