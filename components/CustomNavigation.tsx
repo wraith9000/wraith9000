@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
-import Logo from './Logo';
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -71,30 +70,6 @@ const CustomNavigation: React.FC = () => {
 
   return (
     <>
-      {/* Logo - floating top left with better mobile positioning */}
-      <Box
-        sx={{
-          position: 'fixed',
-          top: { xs: 32, sm: 40, md: 60, lg: 100 }, // Moved lower and more inside
-          left: { xs: 32, sm: 40, md: 60, lg: 140 }, // Moved more inside
-          zIndex: 1300,
-          background: 'none',
-          // Ensure logo is properly sized on mobile
-          '& img': {
-            height: { xs: 32, sm: 36, md: 42, lg: 48 }, // Smaller on mobile
-            width: 'auto',
-          },
-          // Better mobile touch target
-          minWidth: { xs: 44, sm: 48 },
-          minHeight: { xs: 44, sm: 48 },
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Logo />
-      </Box>
-
       {/* Desktop Navigation Menu Items */}
       {!isMobile && (
         <Box
