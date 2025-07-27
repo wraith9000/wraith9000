@@ -68,7 +68,7 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
         },
         getStakingInfo: async () => {
             return {
-                totalStaked: '1,234,567',
+                totalStaked: '0',
                 totalRewards: '89,123',
                 apy: '30',
                 userStaked: '0',

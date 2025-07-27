@@ -30,7 +30,7 @@ const StakingPage: React.FC = () => {
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'info'>('info');
     const [stakingData, setStakingData] = useState({
-        totalStaked: '1,234,567',
+        totalStaked: '0',
         totalRewards: '89,123',
         apy: '30',
         userStaked: '0',
@@ -159,14 +159,14 @@ const StakingPage: React.FC = () => {
         <>
             <SEOHead
                 title="Staking - Wraith9000"
-                description="Stake your $ARENA tokens and earn rewards in the Wraith9000 ecosystem"
+                description="Stake your tokens and earn rewards in the Wraith9000 ecosystem"
             />
             <BaseLayout>
                 <Section>
                     <Container maxWidth="lg">
                         <SectionHeader
                             title="Staking"
-                            subtitle="Stake your $ARENA tokens and earn rewards"
+                            subtitle="Stake your tokens and earn rewards"
                         />
 
                         {/* Connect Wallet Section */}
@@ -178,7 +178,7 @@ const StakingPage: React.FC = () => {
                                         Connect Your Wallet
                                     </Typography>
                                     <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary' }}>
-                                        Connect your wallet to start staking $ARENA tokens
+                                        Connect your wallet to start staking tokens
                                     </Typography>
                                     <Button
                                         variant="contained"
@@ -254,9 +254,6 @@ const StakingPage: React.FC = () => {
                                                 <Typography variant="h4" sx={{ fontFamily: 'Sarpanch, sans-serif', fontWeight: 900 }}>
                                                     {stakingData.totalStaked}
                                                 </Typography>
-                                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                                    $ARENA
-                                                </Typography>
                                             </CardContent>
                                         </Card>
                                     </Grid>
@@ -268,9 +265,6 @@ const StakingPage: React.FC = () => {
                                                 </Typography>
                                                 <Typography variant="h4" sx={{ fontFamily: 'Sarpanch, sans-serif', fontWeight: 900 }}>
                                                     {stakingData.apy}%
-                                                </Typography>
-                                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                                    Annual Yield
                                                 </Typography>
                                             </CardContent>
                                         </Card>
@@ -284,9 +278,6 @@ const StakingPage: React.FC = () => {
                                                 <Typography variant="h4" sx={{ fontFamily: 'Sarpanch, sans-serif', fontWeight: 900 }}>
                                                     {stakingData.userStaked}
                                                 </Typography>
-                                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                                    $ARENA
-                                                </Typography>
                                             </CardContent>
                                         </Card>
                                     </Grid>
@@ -298,9 +289,6 @@ const StakingPage: React.FC = () => {
                                                 </Typography>
                                                 <Typography variant="h4" sx={{ fontFamily: 'Sarpanch, sans-serif', fontWeight: 900 }}>
                                                     {stakingData.userRewards}
-                                                </Typography>
-                                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                                    $ARENA
                                                 </Typography>
                                             </CardContent>
                                         </Card>
@@ -316,7 +304,7 @@ const StakingPage: React.FC = () => {
                                                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                                                     <LockIcon sx={{ color: '#ffe53b', mr: 1 }} />
                                                     <Typography variant="h6" sx={{ fontFamily: 'Sarpanch, sans-serif', fontWeight: 900 }}>
-                                                        Stake $ARENA
+                                                        Stake Tokens
                                                     </Typography>
                                                 </Box>
                                                 <TextField
@@ -327,7 +315,7 @@ const StakingPage: React.FC = () => {
                                                     onChange={(e) => setStakeAmount(e.target.value)}
                                                     sx={{ mb: 2 }}
                                                     InputProps={{
-                                                        endAdornment: <Chip label="$ARENA" size="small" sx={{ bgcolor: '#ffe53b' }} />,
+                                                        endAdornment: <Chip label="Tokens" size="small" sx={{ bgcolor: '#ffe53b' }} />,
                                                     }}
                                                 />
                                                 <Button
@@ -369,7 +357,7 @@ const StakingPage: React.FC = () => {
                                                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                                                     <TimerIcon sx={{ color: '#ff6b6b', mr: 1 }} />
                                                     <Typography variant="h6" sx={{ fontFamily: 'Sarpanch, sans-serif', fontWeight: 900 }}>
-                                                        Unstake $ARENA
+                                                        Unstake Tokens
                                                     </Typography>
                                                 </Box>
                                                 <TextField
@@ -380,7 +368,7 @@ const StakingPage: React.FC = () => {
                                                     onChange={(e) => setUnstakeAmount(e.target.value)}
                                                     sx={{ mb: 2 }}
                                                     InputProps={{
-                                                        endAdornment: <Chip label="$ARENA" size="small" sx={{ bgcolor: '#ff6b6b' }} />,
+                                                        endAdornment: <Chip label="Tokens" size="small" sx={{ bgcolor: '#ff6b6b' }} />,
                                                     }}
                                                 />
                                                 <Button
