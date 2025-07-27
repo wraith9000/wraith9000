@@ -70,7 +70,7 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
             return {
                 totalStaked: '1,234,567',
                 totalRewards: '89,123',
-                apy: '12.5',
+                apy: '30',
                 userStaked: '0',
                 userRewards: '0',
                 lockPeriod: 'No lock period',

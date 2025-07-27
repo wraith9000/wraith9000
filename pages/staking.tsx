@@ -32,7 +32,7 @@ const StakingPage: React.FC = () => {
     const [stakingData, setStakingData] = useState({
         totalStaked: '1,234,567',
         totalRewards: '89,123',
-        apy: '12.5',
+        apy: '30',
         userStaked: '0',
         userRewards: '0',
         lockPeriod: 'No lock period',
