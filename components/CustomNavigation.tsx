@@ -22,6 +22,7 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Staking', href: '/staking' },
+  { label: 'Flywheel', href: '/flywheel', isComingSoon: true },
 ];
 
 const CustomNavigation: React.FC = () => {
@@ -42,6 +43,8 @@ const CustomNavigation: React.FC = () => {
   const handleMenuItemClick = (item: MenuItem) => {
     setDrawerOpen(false);
     if (item.isComingSoon) {
+      setSnackbarMessage('🚀 Flywheel coming soon!');
+      setSnackbarSeverity('info');
       setSnackbarOpen(true);
     } else {
       router.push(item.href);
@@ -88,7 +91,15 @@ const CustomNavigation: React.FC = () => {
             return (
               <Button
                 key={item.href}
-                onClick={() => item.isComingSoon ? setSnackbarOpen(true) : router.push(item.href)}
+                onClick={() => {
+                  if (item.isComingSoon) {
+                    setSnackbarMessage('🚀 Flywheel coming soon!');
+                    setSnackbarSeverity('info');
+                    setSnackbarOpen(true);
+                  } else {
+                    router.push(item.href);
+                  }
+                }}
                 sx={{
                   color: isActive ? '#181f32' : '#fff',
                   bgcolor: isActive ? '#ffe53b' : 'rgba(255,255,255,0.1)',
@@ -451,7 +462,7 @@ const CustomNavigation: React.FC = () => {
       {/* Wallet Connection Snackbar */}
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={4000}
+        autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
@@ -459,12 +470,14 @@ const CustomNavigation: React.FC = () => {
           onClose={() => setSnackbarOpen(false)}
           severity={snackbarSeverity}
           sx={{
+            bgcolor: snackbarSeverity === 'error' ? '#ff6b6b' : '#ffe53b',
+            color: snackbarSeverity === 'error' ? '#fff' : '#181f32',
             fontFamily: 'Sarpanch, sans-serif',
             fontWeight: 900,
             fontSize: 16,
             letterSpacing: 1,
             '& .MuiAlert-icon': {
-              color: snackbarSeverity === 'error' ? '#ff6b6b' : '#181f32',
+              color: snackbarSeverity === 'error' ? '#fff' : '#181f32',
             },
           }}
         >
