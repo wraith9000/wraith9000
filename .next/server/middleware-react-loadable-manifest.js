@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{\"sections\\\\home\\\\Hero.tsx -> ../../public/assets/lottie.json\":{\"id\":\"sections\\\\home\\\\Hero.tsx -> ../../public/assets/lottie.json\",\"files\":[\"static/chunks/public_assets_lottie_json.js\"]},\"sections\\\\home\\\\Hero.tsx -> react-lottie-player\":{\"id\":\"sections\\\\home\\\\Hero.tsx -> react-lottie-player\",\"files\":[\"static/chunks/node_modules_react-lottie-player_dist_LottiePlayer_modern_js.js\"]}}"
+self.__REACT_LOADABLE_MANIFEST="{}"

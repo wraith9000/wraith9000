@@ -35,7 +35,9 @@ const StakingPage: React.FC = () => {
         apy: '12.5',
         userStaked: '0',
         userRewards: '0',
-        lockPeriod: '30 days',
+        lockPeriod: 'No lock period',
+        nextClaimDate: '2024-01-15',
+        claimInterval: 'Weekly',
     });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -424,12 +426,12 @@ const StakingPage: React.FC = () => {
                                                 </Typography>
                                             </Box>
                                             <Chip
-                                                label={`Lock Period: ${stakingData.lockPeriod}`}
-                                                sx={{ bgcolor: '#ffc107', color: '#181f32', fontFamily: 'Sarpanch, sans-serif', fontWeight: 900 }}
+                                                label="Weekly Claims"
+                                                sx={{ bgcolor: '#2effbf', color: '#181f32', fontFamily: 'Sarpanch, sans-serif', fontWeight: 900 }}
                                             />
                                         </Box>
                                         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-                                            Claim your accumulated staking rewards. Rewards are locked for {stakingData.lockPeriod}.
+                                            Claim your accumulated staking rewards. Rewards are distributed weekly.
                                         </Typography>
                                         <Button
                                             variant="contained"
@@ -473,9 +475,8 @@ const StakingPage: React.FC = () => {
                                 {/* Info Alert */}
                                 <Alert severity="info" sx={{ mt: 4, fontFamily: 'Sarpanch, sans-serif' }}>
                                     <Typography variant="body2">
-                                        <strong>Important:</strong> Staking involves locking your tokens for a period of time.
-                                        Make sure you understand the terms before staking. Rewards are distributed based on your
-                                        staked amount and the current APY.
+                                        <strong>Important:</strong> You can unstake your tokens anytime with no lock period.
+                                        Rewards are distributed weekly based on your staked amount and the current APY.
                                     </Typography>
                                 </Alert>
                             </>
