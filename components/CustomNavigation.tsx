@@ -12,6 +12,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { useWeb3Context } from '../hooks/Web3Context';
 
 interface MenuItem {
   label: string;
@@ -21,16 +22,19 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'Staking', href: '/staking', isComingSoon: true },
+  { label: 'Staking', href: '/staking' },
 ];
 
 const CustomNavigation: React.FC = () => {
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { isConnected, account, connectWallet, disconnectWallet, error } = useWeb3Context();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'info'>('info');
 
   const handleMenuClose = () => {
     setDrawerOpen(false);
@@ -43,6 +47,26 @@ const CustomNavigation: React.FC = () => {
     } else {
       router.push(item.href);
     }
+  };
+
+  const handleConnectWallet = async () => {
+    try {
+      await connectWallet();
+      setSnackbarMessage('Wallet connected successfully!');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
+    } catch (err) {
+      setSnackbarMessage(error || 'Failed to connect wallet');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+    }
+  };
+
+  const handleDisconnectWallet = () => {
+    disconnectWallet();
+    setSnackbarMessage('Wallet disconnected');
+    setSnackbarSeverity('info');
+    setSnackbarOpen(true);
   };
 
   return (
@@ -133,33 +157,64 @@ const CustomNavigation: React.FC = () => {
             zIndex: 1300,
           }}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            startIcon={<AccountBalanceWalletRoundedIcon sx={{ fontSize: 20 }} />}
-            sx={{
-              bgcolor: '#ffe53b',
-              color: '#181f32',
-              fontFamily: 'Sarpanch, sans-serif',
-              fontWeight: 900,
-              borderRadius: '20px',
-              minWidth: 110,
-              height: 38,
-              px: 3,
-              fontSize: 16,
-              boxShadow: 2,
-              letterSpacing: 2,
-              textTransform: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1.5,
-              '&:hover': { bgcolor: '#ffe53b', opacity: 0.92 },
-            }}
-            disableElevation
-          >
-            Connect
-          </Button>
+          {isConnected ? (
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={handleDisconnectWallet}
+              sx={{
+                borderColor: '#ff6b6b',
+                color: '#ff6b6b',
+                fontFamily: 'Sarpanch, sans-serif',
+                fontWeight: 900,
+                borderRadius: '20px',
+                minWidth: 110,
+                height: 38,
+                px: 3,
+                fontSize: 16,
+                letterSpacing: 2,
+                textTransform: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                '&:hover': {
+                  borderColor: '#ff6b6b',
+                  bgcolor: 'rgba(255, 107, 107, 0.1)',
+                },
+              }}
+            >
+              {account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Connected'}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              startIcon={<AccountBalanceWalletRoundedIcon sx={{ fontSize: 20 }} />}
+              onClick={handleConnectWallet}
+              sx={{
+                bgcolor: '#ffe53b',
+                color: '#181f32',
+                fontFamily: 'Sarpanch, sans-serif',
+                fontWeight: 900,
+                borderRadius: '20px',
+                minWidth: 110,
+                height: 38,
+                px: 3,
+                fontSize: 16,
+                boxShadow: 2,
+                letterSpacing: 2,
+                textTransform: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                '&:hover': { bgcolor: '#ffe53b', opacity: 0.92 },
+              }}
+              disableElevation
+            >
+              Connect
+            </Button>
+          )}
         </Box>
       )}
 
@@ -339,70 +394,106 @@ const CustomNavigation: React.FC = () => {
 
           {/* Mobile Connect Button */}
           <Box sx={{ width: '100%', mt: 2, px: { xs: 3, sm: 4 } }}>
-            <Button
-              variant="contained"
-              color="secondary"
-              fullWidth
-              startIcon={<AccountBalanceWalletRoundedIcon sx={{ fontSize: 20 }} />}
-              sx={{
-                bgcolor: '#ffe53b',
-                color: '#181f32',
-                fontFamily: 'Sarpanch, sans-serif',
-                fontWeight: 900,
-                borderRadius: '20px',
-                height: { xs: 52, sm: 56 }, // Better touch target
-                fontSize: { xs: 16, sm: 18 },
-                boxShadow: 2,
-                letterSpacing: 2,
-                textTransform: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1.5,
-                '&:hover': {
+            {isConnected ? (
+              <Button
+                variant="outlined"
+                fullWidth
+                onClick={handleDisconnectWallet}
+                sx={{
+                  borderColor: '#ff6b6b',
+                  color: '#ff6b6b',
+                  fontFamily: 'Sarpanch, sans-serif',
+                  fontWeight: 900,
+                  borderRadius: '20px',
+                  height: { xs: 52, sm: 56 }, // Better touch target
+                  fontSize: { xs: 16, sm: 18 },
+                  letterSpacing: 2,
+                  textTransform: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1.5,
+                  '&:hover': {
+                    borderColor: '#ff6b6b',
+                    bgcolor: 'rgba(255, 107, 107, 0.1)',
+                    transform: 'translateY(-1px)',
+                  },
+                  '&:active': {
+                    transform: 'scale(0.98)',
+                  },
+                  '&:focus': {
+                    outline: '2px solid #2effbf',
+                    outlineOffset: '2px',
+                  },
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                {account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Connected'}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="secondary"
+                fullWidth
+                startIcon={<AccountBalanceWalletRoundedIcon sx={{ fontSize: 20 }} />}
+                onClick={handleConnectWallet}
+                sx={{
                   bgcolor: '#ffe53b',
-                  opacity: 0.92,
-                  transform: 'translateY(-1px)',
-                },
-                '&:active': {
-                  transform: 'scale(0.98)',
-                },
-                '&:focus': {
-                  outline: '2px solid #2effbf',
-                  outlineOffset: '2px',
-                },
-                transition: 'all 0.2s ease',
-              }}
-              disableElevation
-            >
-              Connect Wallet
-            </Button>
+                  color: '#181f32',
+                  fontFamily: 'Sarpanch, sans-serif',
+                  fontWeight: 900,
+                  borderRadius: '20px',
+                  height: { xs: 52, sm: 56 }, // Better touch target
+                  fontSize: { xs: 16, sm: 18 },
+                  boxShadow: 2,
+                  letterSpacing: 2,
+                  textTransform: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1.5,
+                  '&:hover': {
+                    bgcolor: '#ffe53b',
+                    opacity: 0.92,
+                    transform: 'translateY(-1px)',
+                  },
+                  '&:active': {
+                    transform: 'scale(0.98)',
+                  },
+                  '&:focus': {
+                    outline: '2px solid #2effbf',
+                    outlineOffset: '2px',
+                  },
+                  transition: 'all 0.2s ease',
+                }}
+                disableElevation
+              >
+                Connect Wallet
+              </Button>
+            )}
           </Box>
         </Box>
       </Drawer>
 
-      {/* Coming Soon Snackbar */}
+      {/* Wallet Connection Snackbar */}
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={3000}
+        autoHideDuration={4000}
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}
-          severity="info"
+          severity={snackbarSeverity}
           sx={{
-            bgcolor: '#ffe53b',
-            color: '#181f32',
             fontFamily: 'Sarpanch, sans-serif',
             fontWeight: 900,
             fontSize: 16,
             letterSpacing: 1,
             '& .MuiAlert-icon': {
-              color: '#181f32',
+              color: snackbarSeverity === 'error' ? '#ff6b6b' : '#181f32',
             },
           }}
         >
-          🚀 Staking coming soon!
+          {snackbarMessage}
         </Alert>
       </Snackbar>
     </>

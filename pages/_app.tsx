@@ -11,6 +11,7 @@ import { SEO } from '../config'
 import Frame from '../components/Frame'
 import ThemeProvider from '../components/wraith9000/ThemeProvider'
 import MobileOptimizer from '../components/MobileOptimizer'
+import { Web3Provider } from '../hooks/Web3Context'
 
 const YOUR_TRACKING_ID = 'G-YTZ512CCQL'
 
@@ -123,13 +124,15 @@ const App: React.FC<AppProps> = (props) => {
         }}
       />
 
-      <ThemeProvider>
-        <MobileOptimizer>
-          <Frame />
-          <CustomNavigation />
-          <Component {...pageProps} />
-        </MobileOptimizer>
-      </ThemeProvider>
+      <Web3Provider>
+        <ThemeProvider>
+          <MobileOptimizer>
+            <Frame />
+            <CustomNavigation />
+            <Component {...pageProps} />
+          </MobileOptimizer>
+        </ThemeProvider>
+      </Web3Provider>
     </>
   )
 }
