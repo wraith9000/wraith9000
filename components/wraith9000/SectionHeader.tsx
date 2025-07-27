@@ -8,7 +8,7 @@ interface SectionHeaderProps {
 }
 
 const SectionHeader: React.FC<SectionHeaderProps> = ({ title, subtitle, sx }) => (
-    <Box sx={{ mb: 6, ...sx }}>
+    <Box sx={{ mb: 6, mt: { xs: 6, sm: 8, md: 12, lg: 16 }, ...sx }}>
         <Typography variant="h2" sx={{ mb: 1 }}>
             {title}
         </Typography>
