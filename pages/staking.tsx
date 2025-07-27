@@ -36,8 +36,8 @@ const StakingPage: React.FC = () => {
         userStaked: '0',
         userRewards: '0',
         lockPeriod: 'No lock period',
-        nextClaimDate: '2024-01-15',
-        claimInterval: 'Weekly',
+        nextClaimDate: 'Available Now',
+        claimInterval: 'Instant',
     });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -426,12 +426,12 @@ const StakingPage: React.FC = () => {
                                                 </Typography>
                                             </Box>
                                             <Chip
-                                                label="Weekly Claims"
+                                                label="Instant Claims"
                                                 sx={{ bgcolor: '#2effbf', color: '#181f32', fontFamily: 'Sarpanch, sans-serif', fontWeight: 900 }}
                                             />
                                         </Box>
                                         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-                                            Claim your accumulated staking rewards. Rewards are distributed weekly.
+                                            Claim your accumulated staking rewards instantly. Rewards are available immediately.
                                         </Typography>
                                         <Button
                                             variant="contained"
@@ -476,7 +476,7 @@ const StakingPage: React.FC = () => {
                                 <Alert severity="info" sx={{ mt: 4, fontFamily: 'Sarpanch, sans-serif' }}>
                                     <Typography variant="body2">
                                         <strong>Important:</strong> You can unstake your tokens anytime with no lock period.
-                                        Rewards are distributed weekly based on your staked amount and the current APY.
+                                        Rewards are available for immediate claiming based on your staked amount and the current APY.
                                     </Typography>
                                 </Alert>
                             </>

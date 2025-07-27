@@ -74,8 +74,8 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
                 userStaked: '0',
                 userRewards: '0',
                 lockPeriod: 'No lock period',
-                nextClaimDate: '2024-01-15',
-                claimInterval: 'Weekly',
+                nextClaimDate: 'Available Now',
+                claimInterval: 'Instant',
             };
         },
     };
