@@ -3,6 +3,7 @@ import React from 'react'
 import { Box, Button, Container, Grid, Typography, Snackbar, Alert } from '@mui/material';
 import Section from '../../components/wraith9000/Section';
 import dynamic from 'next/dynamic'
+import BlackJackGame from '../../components/BlackJackGame'
 
 const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false })
 
@@ -16,6 +17,7 @@ const data = {
 const Hero: React.FC = () => {
   const [animationData, setAnimationData] = React.useState<{ default: any } | undefined>(undefined)
   const [snackbarOpen, setSnackbarOpen] = React.useState(false)
+  const [gameOpen, setGameOpen] = React.useState(false)
 
   React.useEffect(() => {
     // Only load animation data on client side to prevent hydration issues
@@ -32,7 +34,7 @@ const Hero: React.FC = () => {
   }
 
   const handlePlayClick = () => {
-    setSnackbarOpen(true)
+    setGameOpen(true)
   }
 
   const handleSnackbarClose = () => {
@@ -266,31 +268,8 @@ const Hero: React.FC = () => {
 
 
 
-      {/* Coming Soon Snackbar */}
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={handleSnackbarClose}
-          severity="info"
-          sx={{
-            bgcolor: '#ffe53b',
-            color: '#181f32',
-            fontFamily: 'Sarpanch, sans-serif',
-            fontWeight: 900,
-            fontSize: 16,
-            letterSpacing: 1,
-            '& .MuiAlert-icon': {
-              color: '#181f32',
-            },
-          }}
-        >
-          🎮 Game coming soon!
-        </Alert>
-      </Snackbar>
+      {/* Black Jack Game */}
+      <BlackJackGame open={gameOpen} onClose={() => setGameOpen(false)} />
     </Section>
   )
 }
