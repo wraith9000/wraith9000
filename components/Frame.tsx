@@ -51,6 +51,7 @@ const Frame: React.FC = () => {
                 alt="top left corner"
                 width={cornerSize}
                 height={cornerSize}
+                priority
                 style={{
                     position: 'fixed',
                     top: 0,
@@ -66,6 +67,7 @@ const Frame: React.FC = () => {
                 alt="top right corner"
                 width={cornerSize}
                 height={cornerSize}
+                priority
                 style={{
                     position: 'fixed',
                     top: 0,
@@ -80,6 +82,7 @@ const Frame: React.FC = () => {
                 alt="bottom left corner"
                 width={cornerSize}
                 height={cornerSize}
+                priority
                 style={{
                     position: 'fixed',
                     bottom: 0,
@@ -94,6 +97,7 @@ const Frame: React.FC = () => {
                 alt="bottom right corner"
                 width={cornerSize}
                 height={cornerSize}
+                priority
                 style={{
                     position: 'fixed',
                     bottom: 0,

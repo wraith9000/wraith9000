@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { Box, Button, Container, Grid, Typography, Snackbar, Alert } from '@mui/material';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import Section from '../../components/wraith9000/Section';
 import dynamic from 'next/dynamic'
 import BlackJackGame from '../../components/BlackJackGame'
@@ -16,7 +16,6 @@ const data = {
 
 const Hero: React.FC = () => {
   const [animationData, setAnimationData] = React.useState<{ default: any } | undefined>(undefined)
-  const [snackbarOpen, setSnackbarOpen] = React.useState(false)
   const [gameOpen, setGameOpen] = React.useState(false)
 
   React.useEffect(() => {
@@ -37,9 +36,7 @@ const Hero: React.FC = () => {
     setGameOpen(true)
   }
 
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false)
-  }
+
 
   return (
     <Section sx={{

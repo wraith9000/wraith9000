@@ -305,6 +305,8 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
 
     const renderCard = (card: Card, isHidden: boolean = false) => (
         <Card
+            role="img"
+            aria-label={isHidden ? "Hidden card" : `${card.value} of ${card.suit}`}
             sx={{
                 width: 80,
                 height: 120,
@@ -356,6 +358,8 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
             onClose={gameState === 'playing' ? undefined : resetGame}
             maxWidth="md"
             fullWidth
+            keepMounted={false}
+            disableRestoreFocus
             PaperProps={{
                 sx: {
                     background: 'linear-gradient(135deg, #181f32 0%, #2a2f42 100%)',
@@ -373,6 +377,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                     <IconButton
                         onClick={resetGame}
                         sx={{ color: '#2effbf' }}
+                        aria-label="Close game"
                     >
                         <CloseIcon />
                     </IconButton>
@@ -399,6 +404,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                                     size="small"
                                     onClick={decreaseBet}
                                     disabled={bet <= 50}
+                                    aria-label="Decrease bet"
                                     sx={{
                                         minWidth: 40,
                                         height: 40,
@@ -425,6 +431,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                                     size="small"
                                     onClick={increaseBet}
                                     disabled={bet >= balance || bet >= 500}
+                                    aria-label="Increase bet"
                                     sx={{
                                         minWidth: 40,
                                         height: 40,
@@ -446,6 +453,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                             variant="contained"
                             size="large"
                             onClick={startGame}
+                            aria-label="Start Black Jack game"
                             sx={{
                                 bgcolor: '#2effbf',
                                 color: '#181f32',
@@ -478,6 +486,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                                     size="small"
                                     onClick={decreaseBet}
                                     disabled={bet <= 50}
+                                    aria-label="Decrease bet"
                                     sx={{
                                         minWidth: 32,
                                         height: 32,
@@ -501,6 +510,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                                     size="small"
                                     onClick={increaseBet}
                                     disabled={bet >= balance || bet >= 500}
+                                    aria-label="Increase bet"
                                     sx={{
                                         minWidth: 32,
                                         height: 32,
@@ -553,6 +563,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                                 variant="contained"
                                 onClick={hit}
                                 disabled={player.isBusted}
+                                aria-label="Hit - draw another card"
                                 sx={{
                                     bgcolor: '#2effbf',
                                     color: '#181f32',
@@ -566,6 +577,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                                 variant="contained"
                                 onClick={stand}
                                 disabled={player.isBusted}
+                                aria-label="Stand - end your turn"
                                 sx={{
                                     bgcolor: '#ffe53b',
                                     color: '#181f32',
@@ -621,6 +633,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                     <Button
                         variant="outlined"
                         onClick={resetGame}
+                        aria-label="Quit current game"
                         sx={{
                             color: '#2effbf',
                             borderColor: '#2effbf',
@@ -635,6 +648,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                     <Button
                         variant="contained"
                         onClick={startGame}
+                        aria-label="Play another game"
                         sx={{
                             bgcolor: '#2effbf',
                             color: '#181f32',
