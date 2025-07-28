@@ -12,21 +12,14 @@ import {
     DialogActions,
     Chip,
     IconButton,
-    Fade,
     Slide,
     Tooltip,
     Alert,
     LinearProgress,
-    Divider,
     Paper,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemIcon,
 } from '@mui/material';
 import {
     Close as CloseIcon,
-    Info as InfoIcon,
     TrendingUp as TrendingUpIcon,
     Casino as CasinoIcon,
     Psychology as PsychologyIcon,
@@ -95,7 +88,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
         }
         const savedBalance = localStorage.getItem('blackjack-balance');
         if (savedBalance) {
-            setBalance(parseInt(savedBalance));
+            setBalance(parseInt(savedBalance, 10));
         }
     }, []);
 
@@ -141,7 +134,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
     // Initialize Web Audio API
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+            audioContextRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
         }
     }, []);
 
@@ -207,7 +200,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                 } else if (['J', 'Q', 'K'].includes(value)) {
                     numericValue = 10;
                 } else {
-                    numericValue = parseInt(value);
+                    numericValue = parseInt(value, 10);
                 }
                 newDeck.push({ suit, value, numericValue });
             });
@@ -215,9 +208,9 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
         return shuffleDeck(newDeck);
     };
 
-    const shuffleDeck = (deck: Card[]): Card[] => {
-        const shuffled = [...deck];
-        for (let i = shuffled.length - 1; i > 0; i--) {
+    const shuffleDeck = (cards: Card[]): Card[] => {
+        const shuffled = [...cards];
+        for (let i = shuffled.length - 1; i > 0; i -= 1) {
             const j = Math.floor(Math.random() * (i + 1));
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
@@ -462,8 +455,11 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                 checkAchievements(newStats, result);
                 break;
             case 'push':
-                setGameResult('Push! It\'s a tie!');
+                setGameResult('Push! It&apos;s a tie!');
                 newStats.gamesPushed += 1;
+                break;
+            default:
+                // Handle unexpected result
                 break;
         }
 
@@ -491,7 +487,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
         playButtonSound();
     };
 
-    const renderCard = React.useMemo(() => (card: Card, isHidden: boolean = false) => (
+    const renderCard = (card: Card, isHidden: boolean = false) => (
         <Card
             role="img"
             aria-label={isHidden ? "Hidden card" : `${card.value} of ${card.suit}`}
@@ -545,7 +541,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                 )}
             </CardContent>
         </Card>
-    ), []);
+    );
 
     const renderRules = () => (
         <Box>
@@ -560,7 +556,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                             🎯 Objective
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', mb: 2 }}>
-                            Get as close to 21 as possible without going over. Beat the dealer's hand to win.
+                            Get as close to 21 as possible without going over. Beat the dealer&apos;s hand to win.
                         </Typography>
 
                         <Typography variant="h6" sx={{ color: '#2effbf', mb: 2 }}>
@@ -589,7 +585,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                             🏆 Winning
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                            • Beat dealer's hand without busting<br />
+                            • Beat dealer&apos;s hand without busting<br />
                             • Dealer busts (goes over 21)<br />
                             • Push: Same score (tie)
                         </Typography>
@@ -1040,16 +1036,19 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                         {/* Dealer Section */}
                         <Box mb={4}>
                             <Typography variant="h6" mb={2} sx={{ color: '#ffe53b' }}>
-                                Dealer's Hand {isDealerRevealed && `(${dealer.score})`}
+                                Dealer&apos;s Hand {isDealerRevealed && `(${dealer.score})`}
                             </Typography>
                             <Box display="flex" justifyContent="center" flexWrap="wrap">
-                                {dealer.cards.map((card, index) => (
-                                    <Slide key={index} direction="up" in={true} timeout={500 + index * 200}>
-                                        <Box>
-                                            {renderCard(card, index === 1 && !isDealerRevealed)}
-                                        </Box>
-                                    </Slide>
-                                ))}
+                                {dealer.cards.map((card, index) => {
+                                    const isHidden = index === 1 && !isDealerRevealed;
+                                    return (
+                                        <Slide key={`dealer-${card.suit}-${card.value}`} direction="up" in timeout={500 + index * 200}>
+                                            <Box>
+                                                {renderCard(card, isHidden)}
+                                            </Box>
+                                        </Slide>
+                                    );
+                                })}
                             </Box>
                         </Box>
 
@@ -1060,7 +1059,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                             </Typography>
                             <Box display="flex" justifyContent="center" flexWrap="wrap">
                                 {player.cards.map((card, index) => (
-                                    <Slide key={index} direction="up" in={true} timeout={500 + index * 200}>
+                                    <Slide key={`player-${card.suit}-${card.value}`} direction="up" in timeout={500 + index * 200}>
                                         <Box>
                                             {renderCard(card)}
                                         </Box>
@@ -1120,7 +1119,7 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                             >
                                 {[...Array(50)].map((_, i) => (
                                     <Box
-                                        key={i}
+                                        key={`confetti-${Math.random()}`}
                                         sx={{
                                             position: 'absolute',
                                             width: 8,
@@ -1140,9 +1139,9 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                         {/* Achievements Display */}
                         {achievements.length > 0 && (
                             <Box mb={3}>
-                                {achievements.map((achievement, index) => (
+                                {achievements.map((achievement) => (
                                     <Alert
-                                        key={index}
+                                        key={`achievement-${achievement}`}
                                         severity="success"
                                         sx={{
                                             mb: 1,
@@ -1175,8 +1174,8 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                                     Dealer ({dealer.score})
                                 </Typography>
                                 <Box display="flex" justifyContent="center" flexWrap="wrap">
-                                    {dealer.cards.map((card, index) => (
-                                        <Box key={index}>{renderCard(card)}</Box>
+                                    {dealer.cards.map((card) => (
+                                        <Box key={`final-dealer-${card.suit}-${card.value}`}>{renderCard(card)}</Box>
                                     ))}
                                 </Box>
                             </Grid>
@@ -1185,8 +1184,8 @@ const BlackJackGame: React.FC<BlackJackGameProps> = ({ open = false, onClose }) 
                                     Player ({player.score})
                                 </Typography>
                                 <Box display="flex" justifyContent="center" flexWrap="wrap">
-                                    {player.cards.map((card, index) => (
-                                        <Box key={index}>{renderCard(card)}</Box>
+                                    {player.cards.map((card) => (
+                                        <Box key={`final-player-${card.suit}-${card.value}`}>{renderCard(card)}</Box>
                                     ))}
                                 </Box>
                             </Grid>

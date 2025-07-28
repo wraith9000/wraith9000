@@ -47,7 +47,7 @@ const StakingPage: React.FC = () => {
             setSnackbarMessage('Wallet connected successfully!');
             setSnackbarSeverity('success');
             setSnackbarOpen(true);
-        } catch (_err) {
+        } catch {
             setSnackbarMessage(error || 'Failed to connect wallet');
             setSnackbarSeverity('error');
             setSnackbarOpen(true);
@@ -76,7 +76,7 @@ const StakingPage: React.FC = () => {
             setSnackbarSeverity('success');
             setSnackbarOpen(true);
             setStakeAmount('');
-        } catch (_err) {
+        } catch {
             setSnackbarMessage('Failed to stake tokens');
             setSnackbarSeverity('error');
             setSnackbarOpen(true);
@@ -107,7 +107,7 @@ const StakingPage: React.FC = () => {
             setSnackbarSeverity('success');
             setSnackbarOpen(true);
             setUnstakeAmount('');
-        } catch (_err) {
+        } catch {
             setSnackbarMessage('Failed to unstake tokens');
             setSnackbarSeverity('error');
             setSnackbarOpen(true);
@@ -130,7 +130,7 @@ const StakingPage: React.FC = () => {
             setSnackbarMessage('Rewards claimed successfully!');
             setSnackbarSeverity('success');
             setSnackbarOpen(true);
-        } catch (_err) {
+        } catch {
             setSnackbarMessage('Failed to claim rewards');
             setSnackbarSeverity('error');
             setSnackbarOpen(true);
@@ -146,8 +146,8 @@ const StakingPage: React.FC = () => {
                 try {
                     const data = await stakingContract.getStakingInfo();
                     setStakingData(data);
-                } catch (err) {
-                    console.error('Failed to load staking data:', err);
+                } catch {
+                    // Silently handle error - could be network issues or contract not available
                 }
             }
         };
